@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: pg_db
+    image: postgres
+    environment: 
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: prod_db
+    volumes: 
+      - ./postgres_data:/var/lib/postgresql/data/
+    networks:
+      - cars
+
+  pgadmin: 
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+     - '5050:80'
+
+  cars-backend:
+    container_name: cars-backend
+    build:
+      context: ./cars-backend
+      dockerfile: Dockerfile
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./cars-backend:/cars-backend
+    depends_on:
+      - db
+    restart: on-failure
+    networks:
+      - cars
+    environment:
+        TG_BOT_TOKEN: 7689126372:AAFLKvzDUjBcjbvjvtxxIpWzfnMo-PJXj7c
+        NOTIFY_ID: -4745743660
+
+
+  cars-frontend:
+    container_name: cars-frontend
+    build:
+      context: ./cars-frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./cars-frontend:/cars-frontend
+    ports:
+      - '3000:3000'
+    restart: on-failure
+
+networks:
+  cars:
+    driver: bridge
