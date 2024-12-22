@@ -37,7 +37,7 @@ services:
     networks:
       - cars
     environment:
-        TG_BOT_TOKEN: 7689126372:AAFLKvzDUjBcjbvjvtxxIpWzfnMo-PJXj7c
+        TG_BOT_TOKEN: 
         NOTIFY_ID: -4745743660
 
 
