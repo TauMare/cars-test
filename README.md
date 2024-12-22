@@ -1,5 +1,9 @@
-cd cars-frontend
+cd cars-frontend 
+
 npm i 
+
 cd .. 
+
 docker-compose up
+
 Из-за микрокосяков с докером и нестом не получилось оперативно собрать абсолютно складную композицию
